@@ -1,18 +1,27 @@
 import { Controller, Get } from '@nestjs/common';
+import { InjectConnection } from '@nestjs/mongoose';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { Connection } from 'mongoose';
 import { AppService } from './app.service';
 
 @Controller()
 @ApiTags('Root Endpoints')
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(
+    private readonly appService: AppService,
+    @InjectConnection() private readonly connection: Connection,
+  ) {}
 
   @Get()
   @ApiOperation({
     // description: 'Health Check api',
     summary: 'Health check api',
   })
-  healthCheck() {
+  async healthCheck() {
+    const collections = await this.connection.db.collections();
+
+    console.log(collections.map((v) => v.collectionName));
+
     return this.appService.healthCheck();
   }
 }

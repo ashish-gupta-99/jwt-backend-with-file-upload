@@ -14,7 +14,24 @@ export class UsersService {
     return createdUser.save();
   }
 
-  getAllMongoUsers() {
-    return this.usersModal.find().exec();
+  async getAllMongoUsers(
+    limit: number,
+    pageNo: number,
+    filter: any = {},
+    sort: any = { _id: 1 },
+  ) {
+    const skip = pageNo * limit - limit;
+    const [data, count] = await Promise.all([
+      this.usersModal.find(filter).sort(sort).skip(skip).limit(limit),
+      this.usersModal.count(),
+    ]);
+    return {
+      data,
+      count,
+    };
+  }
+
+  findUserByEmail(email: string) {
+    return this.usersModal.findOne({ email }).exec();
   }
 }

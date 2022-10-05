@@ -1,10 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, mongo } from 'mongoose';
+
+// const gfcBucket = new mongo.GridFSBucket();
 
 @Schema({ collection: 'users' })
 export class Users {
   @Prop()
-  name: string;
+  username: string;
 
   @Prop({ required: true })
   email: string;

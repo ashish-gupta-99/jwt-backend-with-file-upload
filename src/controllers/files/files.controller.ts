@@ -49,7 +49,7 @@ export class FilesController {
   @UseInterceptors(FileInterceptor('file'))
   async uploadFile(@UploadedFile('file') file: File) {
     try {
-      console.log(file);
+      //   console.log(file);
 
       await this.filesService.saveToDb(file);
 

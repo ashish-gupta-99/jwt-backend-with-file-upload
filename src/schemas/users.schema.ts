@@ -7,9 +7,15 @@ export class Users {
   name: string;
 
   @Prop({ required: true })
-  email: number;
+  email: string;
+
+  @Prop({ required: true })
+  password: string;
+
+  @Prop()
+  gender: string;
 }
 
-export type CatDocument = Users & Document;
+export type UsersDocument = Users & Document;
 
-export const CatSchema = SchemaFactory.createForClass(Users);
+export const UsersSchema = SchemaFactory.createForClass(Users);
